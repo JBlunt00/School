@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>House Price Prediction (XGBoost)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>House Price Prediction</h1>
+    <p>Enter the details of a house and get a predicted sale price from the trained model.</p>
+
+    <form method="POST">
+        <div class="form-row">
+            <label for="OverallQual">Overall Quality (1–10):</label>
+            <input type="number" step="1" min="1" max="10" name="OverallQual" required>
+        </div>
+
+        <div class="form-row">
+            <label for="GrLivArea">Above Ground Living Area (sq ft):</label>
+            <input type="number" step="1" min="0" name="GrLivArea" required>
+        </div>
+
+        <div class="form-row">
+            <label for="GarageCars">Garage Capacity (cars):</label>
+            <input type="number" step="1" min="0" name="GarageCars" required>
+        </div>
+
+        <div class="form-row">
+            <label for="TotalBsmtSF">Total Basement Area (sq ft):</label>
+            <input type="number" step="1" min="0" name="TotalBsmtSF" required>
+        </div>
+
+        <div class="form-row">
+            <label for="FullBath">Full Bathrooms (above grade):</label>
+            <input type="number" step="1" min="0" name="FullBath" required>
+        </div>
+
+        <div class="form-row">
+            <label for="YearBuilt">Year Built:</label>
+            <input type="number" step="1" min="1800" max="2100" name="YearBuilt" required>
+        </div>
+
+        <div class="form-row">
+            <label for="Neighborhood">Neighborhood:</label>
+            <input type="text" name="Neighborhood" placeholder="e.g. CollgCr, OldTown, Edwards" required>
+        </div>
+
+        <button type="submit">Predict Sale Price</button>
+    </form>
+
+    {% if prediction is not none %}
+        <div class="result">
+            <h2>Predicted Sale Price: ${{ "{:,.2f}".format(prediction) }}</h2>
+        </div>
+    {% endif %}
+
+    {% if error is not none %}
+        <div class="error">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
